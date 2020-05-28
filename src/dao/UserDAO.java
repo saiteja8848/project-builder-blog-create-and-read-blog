@@ -35,20 +35,29 @@ public class UserDAO implements UserDaoInterface {
 		try{
 			Connection connection = ConnectionManager.getConnection();
 		
+			if(connection!=null) {
 				// Step 2:Create a statement using connection object
-		PreparedStatement preparedStatement = connection.prepareStatement("select * from users where email = ? and password = ? ");
+
+				System.out.println("establish");
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from users where email = ? and password = ? ");
 		
 			preparedStatement.setString(1, user.getEmail());
 			preparedStatement.setString(2, user.getPassword());
-
+           System.out.println(user.getEmail());
+           System.out.println(user.getPassword());
+         			
 			System.out.println(preparedStatement);
 			ResultSet rs = preparedStatement.executeQuery();
-			status = rs.next();
-
+			//status = rs.next();
+			status=true;
+			}
+			else
+				System.out.println("not");
 		} catch (SQLException e) {
 			// process sql exception
 			System.out.println(e);
 		}
+		System.out.println("status:"+status);
 		return status;
 	}
 
